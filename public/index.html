@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <!--<meta charset="utf-8" http-equiv="refresh" content="5">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movimiento Articulares</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="/socket.io/socket.io.js"></script>
+    <style media="screen">
+    html, body {
+  height:100%;
+}
+body {
+  display:flex;
+  align-items:center;
+  background: #32567f;
+}
+.display {
+  display: none;
+}
+.visible {
+  text-align: center;
+  visibility: visible;
+}
+.not-visible {
+  text-align: center;
+  visibility: hidden;
+}
+.img-container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body class="h-100 w-100">
+    <div class="container-fluid h-100 bg-primary">
+      <div class="row h-100 d-flex align-items-center justify-content-center">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <h1 id="movimiento" class="pb-0 text-center">esperando movimiento...</h1>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-center">
+              <div style="height: 90px;">
+                <img style="object-fit: cover;" class="img-move d-none embed-responsive-item rounded" id="levantamiento" src="img\levantamiento.png" alt="levantamiento" width="300"/>
+                <img style="object-fit: cover;" class="img-move d-none embed-responsive-item rounded" id="tronco" src="img\tronco.png" alt="tronco" width="300"/>
+                <img style="object-fit: cover;" class="img-move d-none embed-responsive-item rounded" id="hombro"  src="img\hombro.png" alt="hombro" width="300"/>
+                <img style="object-fit: cover;" class="img-move d-none embed-responsive-item rounded" id="brazo"  src="img\brazo.png" alt="brazo" width="300"/>
+                <img style="object-fit: cover;" class="img-move d-none embed-responsive-item rounded" id="flexion" src="img\flexion.png" alt="flexion" width="300"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="img-container">
+        <div class="row justify-content-center align-self-center">
+          <div class="card">
+            <h1>El tipo de movimiento es:</h1>
+          <br />
+            <h1 id="movimiento" class="display-1 p-20"></h1>
+          </div>
+      </div>
+      <div class="img-container">
+            <img class="img-container img-move d-none" id="levantamiento" src="img\levantamiento.png" alt="levantamiento" width="300"/>
+            <img class="img-container img-move d-none" id="tronco" src="img\tronco.png" alt="tronco" width="300"/>
+            <img class="img-container img-move d-none" id="hombro"  src="img\hombro.png" alt="hombro" width="300"/>
+            <img class="img-container img-move d-none" id="brazo"  src="img\brazo.png" alt="brazo" width="300"/>
+            <img class="img-container img-move d-none" id="flexion" src="img\flexion.png" alt="flexion" width="300"/>
+      </div>
+    </div> -->
+    
+    <script>const socket = io();
+
+      const movimentoDisplay = document.getElementById('movimiento');
+      const imgDisplay = document.getElementById('img');
+      const flexionDisplay = document.getElementById('flexion');
+      const levantamientoDisplay = document.getElementById('levantamiento');
+      const brazoDisplay = document.getElementById('brazo');
+      const hombroDisplay = document.getElementById('hombro');
+      const troncoDisplay = document.getElementById('tronco');
+      const allMove = document.querySelectorAll('.img-move');
+      socket.on('data', (data) => {
+        for (const img of allMove){
+          img.classList.add("d-none");
+        }
+        if (data.toString() == 'tronco') {
+          movimentoDisplay.innerHTML ='movimiento de tronco';
+          troncoDisplay.classList.remove("d-none");
+        } else if (data.toString() == 'levantamiento') {
+          movimentoDisplay.innerHTML ='levantamiento de brazo';
+          levantamientoDisplay.classList.remove("d-none");
+        } else if (data.toString() == 'flexion') {
+          movimentoDisplay.innerHTML ='flexion de brazo';
+          flexionDisplay.classList.remove("d-none");
+        } else if (data.toString() == 'brazo_alfrente') {
+          movimentoDisplay.innerHTML ='brazo al frente';
+          brazoDisplay.classList.remove("d-none");
+        } else if (data.toString() == 'hombro') {
+          movimentoDisplay.innerHTML ='movimiento de hombro';
+          hombroDisplay.classList.remove("d-none");
+        }else{
+          movimentoDisplay.innerHTML ='esperando movimiento...';
+        }
+        //console.log(data);
+        //movimiento.innerHTML = `${data}`;
+      });
+
+      //socket.emit("message", "Hello World stranger");
+    </script>
+  </body>
+</html>
