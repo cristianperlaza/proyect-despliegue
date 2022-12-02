@@ -1,8 +1,0 @@
-filter.lfs.clean=git-lfs clean -- %f
-filter.lfs.smudge=git-lfs smudge -- %f
-filter.lfs.process=git-lfs filter-process
-filter.lfs.required=true
-user.name=cristianperlaza
-user.email=cristian.perlaza@uao.edu.co
-user.mail=deicy.ceron@uao.edu.co
-github.token=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
